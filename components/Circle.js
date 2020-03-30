@@ -1,27 +1,30 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 
-const Box = ({ body, size, xAdjustment, yAdjustment, color }) => {
-    const width = size[0];
-    const height = size[1];
-    const xAdjust = xAdjustment ? xAdjustment : 0;
-    const yAdjust = yAdjustment ? yAdjustment : 0;
+const GAME_WIDTH = 650;
+const GAME_HEIGHT = 340;
 
-    const x = body.position.x - width / 2 + xAdjust;
-    const y = body.position.y - height / 2 - yAdjust;
+const BODY_DIAMETER = Math.trunc(Math.max(GAME_WIDTH, GAME_HEIGHT) * 0.05);
+const BORDER_WIDTH = Math.trunc(BODY_DIAMETER * 0.1);
 
-    return (
-        <View
-            style={{
-                position: "absolute",
-                left: x,
-                top: y,
-                width: width,
-                height: height,
-                backgroundColor: color
-            }}
-        />
-    );
+const Circle = ({ body }) => {
+  const { position } = body;
+
+  const x = position.x - BODY_DIAMETER / 2;
+  const y = position.y - BODY_DIAMETER / 2;
+  return <View style={[styles.head, { left: x, top: y }]} />;
 };
 
-export default Box;
+export default Circle;
+
+const styles = {
+  head: {
+    backgroundColor: "#FF5877",
+    borderColor: "#FFC1C1",
+    borderWidth: BORDER_WIDTH,
+    width: BODY_DIAMETER,
+    height: BODY_DIAMETER,
+    position: "absolute",
+    borderRadius: BODY_DIAMETER * 2
+  }
+};
